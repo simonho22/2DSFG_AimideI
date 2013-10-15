@@ -1,5 +1,32 @@
 2DSFG_AimideI
 =============
 
-This is a set of Matlab scripts for simulation of peptide amide-I 2DSFG spectrums.
+This is a set of Matlab scripts for simulation of peptide amide-I 2DSFG spectras. 
+The signal of 2DSFG is equal to the product of several factors. 
 
+Sig = E*J*L*R*B
+
+E = Electric field tensor, which describes polarization directions.
+J = Jones matrix, which describes incident angles of lasers.
+L = Fresnel coefficient, which describes surface reflection/transition properties.
+R = Rotational tensor, which transforms molecular response from molecule from to lab frame.
+B = Molecular response, which is the intrinsic molecular property of system. 
+
+Given molecule structural file(in PDB format), the main script "2DSFG_AmindeI.m" will first 
+call "GetAmideI.m" to extract structural infomation of amide I groups and start to build 
+a two-exciton hamiltonian by "TwoExcitonH.m". The coupling between those modes are calculated 
+base on Transition Dipole Coupling (TDC) model. 
+
+After construction of the hamiltonian, the main script will call "Feynman_2DSFG_OuTerV2.m" to
+calculate responses for different Feynman pathways. As a result, here we will have molecular 
+response(B) of the system. Depending on the choose of ensemble average, the main script will
+apply respective rotational tensor on B to generate molecular response in lab frame.
+
+Here in this preliminary version, we neglect surface propeties by assuming L as indentity. 
+In the future version, we will add this part back to the simulation. Later, the main script
+apply J and E on the molecular response in lab frame to produce signal.
+
+Finally, the main script call "Plot2DSFG.m" to make a contour plot with (X-axis, Y-axis) as
+(Probe frequency, Pump frequency).
+
+jjho 131015
